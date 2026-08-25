@@ -77,7 +77,13 @@ fi
 echo "OK: Web server is healthy"
 exit 0
 
+____________________________________________________________________________________
+
+
 Файл keepalived.conf
+
+
+
 
 global_defs {
     router_id LVS_MASTER
