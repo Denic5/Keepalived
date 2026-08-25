@@ -53,6 +53,69 @@
 - Настройте Keepalived так, чтобы он запускал данный скрипт каждые 3 секунды и переносил виртуальный IP на другой сервер, если bash-скрипт завершался с кодом, отличным от нуля (то есть порт веб-сервера был недоступен или отсутствовал index.html). Используйте для этого секцию vrrp_script
 - Отправьте получившейся bash-скрипт и конфигурационный файл keepalived, а также скриншот с демонстрацией переезда плавающего ip на другой сервер в случае недоступности порта или файла index.html
 
+скрипт: 
+#!/bin/bash
+
+
+HOST="127.0.0.1"
+PORT="80"
+DOCUMENT_ROOT="/var/www/html"
+INDEX_FILE="index.html"
+
+
+timeout 2 bash -c "echo > /dev/tcp/$HOST/$PORT" 2>/dev/null
+if [ $? -ne 0 ]; then
+    echo "ERROR: Port $PORT is not available"
+    exit 1
+fi
+
+if [ ! -f "$DOCUMENT_ROOT/$INDEX_FILE" ]; then
+    echo "ERROR: $DOCUMENT_ROOT/$INDEX_FILE not found"
+    exit 1
+fi
+
+echo "OK: Web server is healthy"
+exit 0
+
+Файл keepalived.conf
+
+global_defs {
+    router_id LVS_MASTER
+}
+
+vrrp_script check_web {
+    script "/etc/keepalived/check_web.sh"
+    interval 3          
+    timeout 2
+    fall 2              
+    rise 2              
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface ens33
+    virtual_router_id 15
+    priority 255
+    advert_int 1
+    
+    authentication {
+        auth_type PASS
+        auth_pass secret123
+    }
+    
+    virtual_ipaddress {
+        172.25.117.15/20
+    }
+    
+    track_script {
+        check_web      
+    }
+}
+
+Отличие только в приоритете и название севера Backup
+
+
+
 
 ------
 
