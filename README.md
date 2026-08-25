@@ -121,6 +121,10 @@ vrrp_instance VI_1 {
 Отличие только в приоритете и название севера Backup
 
 
+![1 сервер остановлен](https://github.com/Denic5/Keepalived/blob/e7dfcd7425abe11301ab076901fb34e3b69cc40f/img/%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%202%201%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD.png)
+
+![Переключение серверов](https://github.com/Denic5/Keepalived/blob/e7dfcd7425abe11301ab076901fb34e3b69cc40f/img/%D0%BF%D0%B5%D1%80%D0%B5%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2.png)
+
 
 
 ------
